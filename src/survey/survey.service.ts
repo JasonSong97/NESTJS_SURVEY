@@ -16,35 +16,35 @@ export class SurveyService {
   /**
    * 설문지 전체 조회
    */
-  getSurveys() {
+  async getSurveys() {
     return `전체를 조회해서 보내줍니다.`;
   }
 
   /**
    * 특정 설문지 조회
    */
-  getSurvey(id: number) {
+  async getSurvey(id: number) {
     return `This action returns a #${id} survey`;
   }
 
   /**
    * 설문지 생성
    */
-  postSurvey(createSurveyDto: CreateSurveyDto) {
+  async postSurvey(createSurveyDto: CreateSurveyDto) {
     return 'This action adds a new survey';
   }
 
   /**
    * 특정 설문지 수정
    */
-  putSurvey(id: number, updateSurveyDto: UpdateSurveyDto) {
+  async putSurvey(id: number, updateSurveyDto: UpdateSurveyDto) {
     return `This action updates a #${id} survey`;
   }
 
   /**
    * 특정 설문지 삭제
    */  
-  deleteSurvey(id: number) {
+  async deleteSurvey(id: number) {
     return `This action removes a #${id} survey`;
   }
 }
