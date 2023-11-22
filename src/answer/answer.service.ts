@@ -10,7 +10,7 @@ export class AnswerService {
 
   constructor(
     @InjectRepository(Answer)
-    private readonly answerRepository:Repository<Answer>,
+    private readonly answerRepository: Repository<Answer>,
   ) {}
 
   /**

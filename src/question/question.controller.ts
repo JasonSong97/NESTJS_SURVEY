@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put, ParseIntPipe } from '@nestjs/common';
 import { QuestionService } from './question.service';
 import { CreateQuestionDto } from './dto/create-question.dto';
 import { UpdateQuestionDto } from './dto/update-question.dto';
@@ -20,15 +20,19 @@ export class QuestionController {
    * 특정 질문 조회
    */
   @Get(':id')
-  getQuestion(@Param('id') id: string) {
-    return this.questionService.getQuestion(+id);
+  getQuestion(
+    @Param('id', ParseIntPipe) id: number
+  ) {
+    return this.questionService.getQuestion(id);
   }
 
   /**
    * 질문 생성
    */
   @Post()
-  postQuestion(@Body() createQuestionDto: CreateQuestionDto) {
+  postQuestion(
+    @Body() createQuestionDto: CreateQuestionDto
+  ) {
     return this.questionService.postQuestion(createQuestionDto);
   }
 
@@ -36,15 +40,20 @@ export class QuestionController {
    * 특정 질문 수정
    */
   @Put(':id')
-  putQuestion(@Param('id') id: string, @Body() updateQuestionDto: UpdateQuestionDto) {
-    return this.questionService.putQuestion(+id, updateQuestionDto);
+  putQuestion(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateQuestionDto: UpdateQuestionDto
+  ) {
+    return this.questionService.putQuestion(id, updateQuestionDto);
   }
 
   /**
    * 특정 질문 삭제
    */
   @Delete(':id')
-  deleteQuestion(@Param('id') id: string) {
-    return this.questionService.deleteQuestion(+id);
+  deleteQuestion(
+    @Param('id', ParseIntPipe) id: number
+  ) {
+    return this.questionService.deleteQuestion(id);
   }
 }
