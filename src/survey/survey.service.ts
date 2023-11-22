@@ -1,26 +1,50 @@
 import { Injectable } from '@nestjs/common';
 import { CreateSurveyDto } from './dto/create-survey.dto';
 import { UpdateSurveyDto } from './dto/update-survey.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Survey } from './entities/survey.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class SurveyService {
-  create(createSurveyDto: CreateSurveyDto) {
-    return 'This action adds a new survey';
+
+  constructor(
+    @InjectRepository(Survey)
+    private readonly surveyRepository: Repository<Survey>,
+  ) {}
+
+  /**
+   * 설문지 전체 조회
+   */
+  getSurveys() {
+    return `전체를 조회해서 보내줍니다.`;
   }
 
-  findAll() {
-    return `This action returns all survey`;
-  }
-
-  findOne(id: number) {
+  /**
+   * 특정 설문지 조회
+   */
+  getSurvey(id: number) {
     return `This action returns a #${id} survey`;
   }
 
-  update(id: number, updateSurveyDto: UpdateSurveyDto) {
+  /**
+   * 설문지 생성
+   */
+  postSurvey(createSurveyDto: CreateSurveyDto) {
+    return 'This action adds a new survey';
+  }
+
+  /**
+   * 특정 설문지 수정
+   */
+  putSurvey(id: number, updateSurveyDto: UpdateSurveyDto) {
     return `This action updates a #${id} survey`;
   }
 
-  remove(id: number) {
+  /**
+   * 특정 설문지 삭제
+   */  
+  deleteSurvey(id: number) {
     return `This action removes a #${id} survey`;
   }
 }

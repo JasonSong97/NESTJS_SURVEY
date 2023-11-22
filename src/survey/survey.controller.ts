@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
 import { SurveyService } from './survey.service';
 import { CreateSurveyDto } from './dto/create-survey.dto';
 import { UpdateSurveyDto } from './dto/update-survey.dto';
@@ -8,28 +8,52 @@ export class SurveyController {
   
   constructor(private readonly surveyService: SurveyService) {}
 
-  @Post()
-  create(@Body() createSurveyDto: CreateSurveyDto) {
-    return this.surveyService.create(createSurveyDto);
+  /**
+   * 설문지 전체 조회
+   */
+  @Get('all')
+  getSurveys() {
+    return this.surveyService.getSurveys();
   }
 
-  @Get()
-  findAll() {
-    return this.surveyService.findAll();
-  }
-
+  /**
+   * 특정 설문지 조회
+   */
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.surveyService.findOne(+id);
+  getSurvey(
+    @Param('id') id: string
+  ) {
+    return this.surveyService.getSurvey(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateSurveyDto: UpdateSurveyDto) {
-    return this.surveyService.update(+id, updateSurveyDto);
+  /**
+   * 설문지 생성
+   */
+  @Post()
+  postSurvey(
+    @Body() createSurveyDto: CreateSurveyDto
+  ) {
+    return this.surveyService.postSurvey(createSurveyDto);
   }
 
+  /**
+   * 특정 설문지 수정
+   */
+  @Put(':id')
+  putSurvey(
+    @Param('id') id: string, 
+    @Body() updateSurveyDto: UpdateSurveyDto
+  ) {
+    return this.surveyService.putSurvey(+id, updateSurveyDto);
+  }
+
+  /**
+   * 특정 설문지 삭제
+   */
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.surveyService.remove(+id);
+  deleteSurvey(
+    @Param('id') id: string
+  ) {
+    return this.surveyService.deleteSurvey(+id);
   }
 }

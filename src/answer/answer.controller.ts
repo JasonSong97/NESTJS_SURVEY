@@ -1,34 +1,50 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
 import { AnswerService } from './answer.service';
 import { CreateAnswerDto } from './dto/create-answer.dto';
 import { UpdateAnswerDto } from './dto/update-answer.dto';
 
 @Controller('api/answer')
 export class AnswerController {
+
   constructor(private readonly answerService: AnswerService) {}
 
-  @Post()
-  create(@Body() createAnswerDto: CreateAnswerDto) {
-    return this.answerService.create(createAnswerDto);
+  /**
+   * 답변 전체 조회
+   */
+  @Get('all')
+  getAnswers() {
+    return this.answerService.getAnswers();
   }
-
-  @Get()
-  findAll() {
-    return this.answerService.findAll();
-  }
-
+  
+  /**
+   * 특정 답변 조회
+   */
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.answerService.findOne(+id);
+  getAnswer(@Param('id') id: string) {
+    return this.answerService.getAnswer(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAnswerDto: UpdateAnswerDto) {
-    return this.answerService.update(+id, updateAnswerDto);
+  /**
+   * 답변 생성
+   */
+  @Post()
+  postAnswer(@Body() createAnswerDto: CreateAnswerDto) {
+    return this.answerService.postAnswer(createAnswerDto);
   }
 
+  /**
+   * 특정 답변 수정
+   */
+  @Put(':id')
+  putAnswer(@Param('id') id: string, @Body() updateAnswerDto: UpdateAnswerDto) {
+    return this.answerService.putAnswer(+id, updateAnswerDto);
+  }
+
+  /**
+   * 특정 답변 삭제
+   */
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.answerService.remove(+id);
+  deleteAnswer(@Param('id') id: string) {
+    return this.answerService.deleteAnswer(+id);
   }
 }
