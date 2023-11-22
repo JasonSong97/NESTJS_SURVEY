@@ -3,7 +3,7 @@ import { SurveyService } from './survey.service';
 import { CreateSurveyDto } from './dto/create-survey.dto';
 import { UpdateSurveyDto } from './dto/update-survey.dto';
 
-@Controller('survey')
+@Controller('api/survey')
 export class SurveyController {
   
   constructor(private readonly surveyService: SurveyService) {}
