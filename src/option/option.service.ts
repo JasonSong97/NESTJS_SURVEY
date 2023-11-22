@@ -23,28 +23,37 @@ export class OptionService {
   /**
    * 특정 옵션 조회
    */
-  async getOption(id: number) {
+  async getOption(
+    id: number
+  ) {
     return `This action returns a #${id} option`;
   }
 
   /**
    * 옵션 생성
    */
-  async postOption(createOptionDto: CreateOptionDto) {
+  async postOption(
+    createOptionDto: CreateOptionDto
+  ) {
     return 'This action adds a new option';
   }
 
   /**
    * 특정 옵션 수정
    */
-  async putOption(id: number, updateOptionDto: UpdateOptionDto) {
+  async putOption(
+    id: number, 
+    updateOptionDto: UpdateOptionDto
+  ) {
     return `This action updates a #${id} option`;
   }
 
   /**
    * 특정 옵션 삭제
    */
-  async deleteOption(id: number) {
+  async deleteOption(
+    id: number
+  ) {
     return `This action removes a #${id} option`;
   }
 }

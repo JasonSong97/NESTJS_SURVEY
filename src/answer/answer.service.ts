@@ -23,28 +23,37 @@ export class AnswerService {
   /**
    * 특정 답변 조회
    */
-  async getAnswer(id: number) {
+  async getAnswer(
+    id: number
+  ) {
     return `This action returns a #${id} answer`;
   }
 
   /**
    * 답변 생성
    */
-  async postAnswer(createAnswerDto: CreateAnswerDto) {
+  async postAnswer(
+    createAnswerDto: CreateAnswerDto
+  ) {
     return 'This action adds a new answer';
   }
 
   /**
    * 특정 답변 수정
    */
-  async putAnswer(id: number, updateAnswerDto: UpdateAnswerDto) {
+  async putAnswer(
+    id: number, 
+    updateAnswerDto: UpdateAnswerDto
+  ) {
     return `This action updates a #${id} answer`;
   }
 
   /**
    * 특정 답변 삭제
    */
-  async deleteAnswer(id: number) {
+  async deleteAnswer(
+    id: number
+  ) {
     return `This action removes a #${id} answer`;
   }
 }

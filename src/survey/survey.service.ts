@@ -23,28 +23,37 @@ export class SurveyService {
   /**
    * 특정 설문지 조회
    */
-  async getSurvey(id: number) {
+  async getSurvey(
+    id: number
+  ) {
     return `This action returns a #${id} survey`;
   }
 
   /**
    * 설문지 생성
    */
-  async postSurvey(createSurveyDto: CreateSurveyDto) {
+  async postSurvey(
+    createSurveyDto: CreateSurveyDto
+  ) {
     return 'This action adds a new survey';
   }
 
   /**
    * 특정 설문지 수정
    */
-  async putSurvey(id: number, updateSurveyDto: UpdateSurveyDto) {
+  async putSurvey(
+    id: number, 
+    updateSurveyDto: UpdateSurveyDto
+  ) {
     return `This action updates a #${id} survey`;
   }
 
   /**
    * 특정 설문지 삭제
    */  
-  async deleteSurvey(id: number) {
+  async deleteSurvey(
+    id: number
+  ) {
     return `This action removes a #${id} survey`;
   }
 }

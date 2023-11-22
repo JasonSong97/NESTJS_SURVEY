@@ -23,28 +23,37 @@ export class QuestionService {
   /**
    * 특정 질문 조회
    */
-  async getQuestion(id: number) {
+  async getQuestion(
+    id: number
+  ) {
     return `This action returns a #${id} question`;
   }
 
   /**
    * 질문 생성
    */
-  async postQuestion(createQuestionDto: CreateQuestionDto) {
+  async postQuestion(
+    createQuestionDto: CreateQuestionDto
+  ) {
     return 'This action adds a new question';
   }
 
   /**
    * 특정 질문 수정
    */
-  async putQuestion(id: number, updateQuestionDto: UpdateQuestionDto) {
+  async putQuestion(
+    id: number, 
+    updateQuestionDto: UpdateQuestionDto
+  ) {
     return `This action updates a #${id} question`;
   }
 
   /**
    * 특정 질문 삭제
    */
-  async deleteQuestion(id: number) {
+  async deleteQuestion(
+    id: number
+  ) {
     return `This action removes a #${id} question`;
   }
 }
