@@ -31,9 +31,10 @@ export class AnswerController {
    */
   @Post()
   postAnswer(
-    @Body() createAnswerDto: CreateAnswerDto
+    @Body('surveyId') surveyId: number,
+    @Body('totalScore') totalScore: number,
   ) {
-    return this.answerService.postAnswer(createAnswerDto);
+    return this.answerService.postAnswer(surveyId, totalScore);
   }
 
   /**
@@ -42,9 +43,9 @@ export class AnswerController {
   @Put(':id')
   putAnswer(
     @Param('id', ParseIntPipe) id: number, 
-    @Body() updateAnswerDto: UpdateAnswerDto
+    @Body('totalScore') totalScore: number,
   ) {
-    return this.answerService.putAnswer(id, updateAnswerDto);
+    return this.answerService.putAnswer(id, totalScore);
   }
 
   /**
