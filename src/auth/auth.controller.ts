@@ -32,4 +32,26 @@ export class AuthController {
       password,
     });
   }
+
+  @Post('token/refresh')
+  postTokenRefresh(
+    @Headers('authorization') rawToken: string,
+  ) {
+    const token = this.authService.extractTokenFromHeader(rawToken, true);
+    const newToken = this.authService.rotateToken(token, true); // 새로운 토큰 발급
+    return {
+      refreshToken: newToken,
+    }
+  }
+
+  @Post('token/access')
+  postTokenAccess(
+    @Headers('authorization') rawToken: string,
+  ) {
+    const token = this.authService.extractTokenFromHeader(rawToken, false);
+    const newToken = this.authService.rotateToken(token, true); // 새로운 토큰 발급
+    return {
+      accessToken: newToken,
+    }
+  }
 }
