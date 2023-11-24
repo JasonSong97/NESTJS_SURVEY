@@ -1,7 +1,5 @@
 import { Controller, Get, Post, Body, Param, Delete, Put, ParseIntPipe } from '@nestjs/common';
 import { QuestionService } from './question.service';
-import { CreateQuestionDto } from './dto/create-question.dto';
-import { UpdateQuestionDto } from './dto/update-question.dto';
 
 @Controller('api/question')
 export class QuestionController {
@@ -31,9 +29,10 @@ export class QuestionController {
    */
   @Post()
   postQuestion(
-    @Body() createQuestionDto: CreateQuestionDto
+    @Body('surveyId', ParseIntPipe) surveyId: number,
+    @Body('content') content: string,
   ) {
-    return this.questionService.postQuestion(createQuestionDto);
+    return this.questionService.postQuestion(surveyId, content);
   }
 
   /**
@@ -42,9 +41,9 @@ export class QuestionController {
   @Put(':id')
   putQuestion(
     @Param('id', ParseIntPipe) id: number,
-    @Body() updateQuestionDto: UpdateQuestionDto
+    @Body('title') content: string,
   ) {
-    return this.questionService.putQuestion(id, updateQuestionDto);
+    return this.questionService.putQuestion(id, content);
   }
 
   /**
