@@ -1,6 +1,4 @@
-import { Injectable } from '@nestjs/common';
-import { CreateSurveyDto } from './dto/create-survey.dto';
-import { UpdateSurveyDto } from './dto/update-survey.dto';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Survey } from './entities/survey.entity';
 import { Repository } from 'typeorm';
@@ -17,7 +15,15 @@ export class SurveyService {
    * 설문지 전체 조회
    */
   async getSurveys() {
-    return `전체를 조회해서 보내줍니다.`;
+    return await this.surveyRepository.find({
+      relations:[
+        'questions',
+        'answers'
+      ],
+      order: {
+        id: 'asc',
+      },
+    });
   }
 
   /**
@@ -26,16 +32,45 @@ export class SurveyService {
   async getSurvey(
     id: number
   ) {
-    return `This action returns a #${id} survey`;
+    // 1. survey id의 존재 유무 확인
+    // 2. 없으면, NotFoundException
+    // 3. 있으면, 그대로 return
+    const survey = await this.surveyRepository.findOne({
+      where: {
+        id,
+      },
+      relations:[
+        'questions',
+        'answers'
+      ],
+    });
+    if (!survey) throw new NotFoundException(`id가 ${id}인 survey는 존재하지 않습니다.}`);
+    return survey;
   }
 
   /**
    * 설문지 생성
    */
   async postSurvey(
-    createSurveyDto: CreateSurveyDto
+    title: string,
+    content: string,
   ) {
-    return 'This action adds a new survey';
+    // 1. 중복된 survey가 있는지 title로 조회
+    // 2. 중복된 survey가 있으면, BadRequestException
+    // 3. 중복된 survey가 없으면, create를 이용해서 survey 생성
+    // 4. save를 이용해서 survey 저장
+    const validationCheck = await this.surveyRepository.findOne({
+      where: {
+        title,
+      },
+    });
+    if (validationCheck) throw new BadRequestException(`${title}은 이미 존재하는 title 입니다.`);
+
+    const survey = this.surveyRepository.create({ // await 필요 없음
+      title,
+      content,
+    });
+    return await this.surveyRepository.save(survey);
   }
 
   /**
@@ -43,17 +78,40 @@ export class SurveyService {
    */
   async putSurvey(
     id: number, 
-    updateSurveyDto: UpdateSurveyDto
+    title: string,
+    content: string,
   ) {
-    return `This action updates a #${id} survey`;
+    // 1. survey id의 존재 유무 확인
+    // 2. 없으면, NotFoundException
+    // 3. 있으면, 값 변경
+    // 4. 변경된 객체를 return
+    const survey = await this.surveyRepository.findOne({
+      where: {
+        id,
+      },
+    });
+    if (!survey) throw new NotFoundException(`id가 ${id}인 survey는 존재하지 않습니다.}`);
+    if (title) survey.title = title;
+    if (content) survey.content = content;
+    return await this.surveyRepository.save(survey);
   }
 
   /**
    * 특정 설문지 삭제
-   */  
+   */
   async deleteSurvey(
     id: number
   ) {
-    return `This action removes a #${id} survey`;
+    // 1. survey id의 존재 유무 확인
+    // 2. 없으면, NotFoundException
+    // 3. 있으면, 그대로 삭제 후 survey id만 리턴
+    const survey = await this.surveyRepository.findOne({
+      where: {
+        id,
+      },
+    });
+    if (!survey) throw new NotFoundException(`id가 ${id}인 survey는 존재하지 않습니다.}`);
+    await this.surveyRepository.delete(id);
+    return id;
   }
 }

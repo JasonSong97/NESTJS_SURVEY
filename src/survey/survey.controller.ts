@@ -1,7 +1,5 @@
 import { Controller, Get, Post, Body, Param, Delete, Put, ParseIntPipe } from '@nestjs/common';
 import { SurveyService } from './survey.service';
-import { CreateSurveyDto } from './dto/create-survey.dto';
-import { UpdateSurveyDto } from './dto/update-survey.dto';
 
 @Controller('api/survey')
 export class SurveyController {
@@ -31,9 +29,10 @@ export class SurveyController {
    */
   @Post()
   postSurvey(
-    @Body() createSurveyDto: CreateSurveyDto
+    @Body('title') title: string, 
+    @Body('content') content: string,
   ) {
-    return this.surveyService.postSurvey(createSurveyDto);
+    return this.surveyService.postSurvey(title, content);
   }
 
   /**
@@ -42,9 +41,10 @@ export class SurveyController {
   @Put(':id')
   putSurvey(
     @Param('id', ParseIntPipe) id: number,
-    @Body() updateSurveyDto: UpdateSurveyDto
+    @Body('title') title: string, 
+    @Body('content') content: string
   ) {
-    return this.surveyService.putSurvey(id, updateSurveyDto);
+    return this.surveyService.putSurvey(id, title, content);
   }
 
   /**
