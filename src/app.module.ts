@@ -11,6 +11,9 @@ import { Question } from './question/entities/question.entity';
 import { Answer } from './answer/entities/answer.entity';
 import { Option } from './option/entities/option.entity';
 import { Survey } from './survey/entities/survey.entity';
+import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
+import { User } from './user/entities/user.entity';
 
 @Module({
   imports: [
@@ -19,6 +22,8 @@ import { Survey } from './survey/entities/survey.entity';
     OptionModule, 
     AnswerModule, 
     CommonModule,
+    UserModule,
+    AuthModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: '127.0.0.1',
@@ -31,6 +36,7 @@ import { Survey } from './survey/entities/survey.entity';
         Answer,
         Option,
         Survey,
+        User,
       ],
       synchronize: true,
     }),
