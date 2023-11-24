@@ -11,7 +11,7 @@ export class OptionController {
   /**
    * 옵션 전체 조회
    */
-  @Get()
+  @Get('all')
   getOptions() {
     return this.optionService.getOptions();
   }
@@ -31,9 +31,11 @@ export class OptionController {
    */
   @Post()
   postOption(
-    @Body() createOptionDto: CreateOptionDto
+    @Body('questionId', ParseIntPipe) questionId: number,
+    @Body('content') content: string,
+    @Body('score', ParseIntPipe) score: number,
   ) {
-    return this.optionService.postOption(createOptionDto);
+    return this.optionService.postOption(questionId, score, content);
   }
 
   /**
@@ -42,9 +44,10 @@ export class OptionController {
   @Put(':id')
   putOption(
     @Param('id', ParseIntPipe) id: number, 
-    @Body() updateOptionDto: UpdateOptionDto
+    @Body('content') content: string,
+    @Body('score', ParseIntPipe) score: number,
   ) {
-    return this.optionService.putOption(+id, updateOptionDto);
+    return this.optionService.putOption(id, score, content);
   }
 
   /**
