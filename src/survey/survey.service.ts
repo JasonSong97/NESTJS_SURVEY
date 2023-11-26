@@ -85,14 +85,12 @@ export class SurveyService {
    */
   async patchSurvey(
     id: number,
-    userId: number,
     patchDto: UpdateSurveyDto,
   ) {
     // 1. survey id의 존재 유무 확인
     // 2. 없으면, NotFoundException
     // 3. 있으면, 값 변경
     // 4. 변경된 객체를 return
-    
     const survey = await this.surveyRepository.findOne({
       where: {
         id,
@@ -110,7 +108,6 @@ export class SurveyService {
    */
   async deleteSurvey(
     id: number,
-    userId: number,
   ) {
     // 1. survey id의 존재 유무 확인
     // 2. 없으면, NotFoundException
@@ -120,7 +117,6 @@ export class SurveyService {
         id,
       },
     });
-    if (userId !== survey.writer.id) throw new UnauthorizedException('로그인한 사용자와 일치하지 않습니다.');
     if (!survey) throw new NotFoundException(`id가 ${id}인 survey는 존재하지 않습니다.}`);
     await this.surveyRepository.delete(id);
     return id;

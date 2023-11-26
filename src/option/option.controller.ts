@@ -1,7 +1,9 @@
-import { Controller, Get, Post, Body, Param, Delete, Put, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, UseGuards, Patch } from '@nestjs/common';
 import { OptionService } from './option.service';
 import { CreateOptionDto } from './dto/create-option.dto';
 import { UpdateOptionDto } from './dto/update-option.dto';
+import { Member } from 'src/user/decorator/user.decorator';
+import { AccessTokenGuard } from 'src/auth/guard/bearer-token.guard';
 
 @Controller('api/option')
 export class OptionController {
@@ -30,31 +32,33 @@ export class OptionController {
    * 옵션 생성
    */
   @Post()
+  @UseGuards(AccessTokenGuard)
   postOption(
-    @Body('questionId', ParseIntPipe) questionId: number,
-    @Body('content') content: string,
-    @Body('score', ParseIntPipe) score: number,
+    @Body() body: CreateOptionDto,
   ) {
-    return this.optionService.postOption(questionId, score, content);
+    return this.optionService.postOption(body);
   }
 
   /**
    * 특정 옵션 수정
    */
-  @Put(':id')
-  putOption(
+  @Patch(':id')
+  @UseGuards(AccessTokenGuard)
+  patchOption(
+    @Member('id') userId: number,
     @Param('id', ParseIntPipe) id: number, 
-    @Body('content') content: string,
-    @Body('score', ParseIntPipe) score: number,
+    @Body() body: UpdateOptionDto,
   ) {
-    return this.optionService.putOption(id, score, content);
+    return this.optionService.patchOption(id, body);
   }
 
   /**
    * 특정 옵션 삭제
    */
   @Delete(':id')
+  @UseGuards(AccessTokenGuard)
   deleteOption(
+    @Member('id') userId: number,
     @Param('id', ParseIntPipe) id: number
   ) {
     return this.optionService.deleteOption(id);

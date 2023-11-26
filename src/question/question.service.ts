@@ -4,6 +4,7 @@ import { Question } from './entities/question.entity';
 import { Repository } from 'typeorm';
 import { Survey } from 'src/survey/entities/survey.entity';
 import { UpdateQuestionDto } from './dto/update-question.dto';
+import { CreateQuestionDto } from './dto/create-question.dto';
 
 @Injectable()
 export class QuestionService {
@@ -56,8 +57,7 @@ export class QuestionService {
    * 질문 생성
    */
   async postQuestion(
-    surveyId: number,
-    content: string,
+    postDto: CreateQuestionDto,
   ) {
     // 1. 중복된 question이 있는지 content로 조회
     // 2. 중복된 question이 있으면, BadRequestException
@@ -65,6 +65,7 @@ export class QuestionService {
     // 4. 없으면 BadRequestException
     // 5. 있으면 조회된 survey를 question create할 때, 같이 넣기
     // 6. save를 이용해서 question 저장
+    const {content, surveyId} = postDto;
     const validationCheck = await this.questionRepository.findOne({
       where: {
         content,
@@ -80,7 +81,7 @@ export class QuestionService {
     if (!survey) throw new NotFoundException(`id가 ${surveyId}인 survey는 존재하지 않습니다.}`);
   
     const question = this.questionRepository.create({ // await 필요 없음
-      content,
+      ...postDto,
       survey,
     });
     return await this.questionRepository.save(question);

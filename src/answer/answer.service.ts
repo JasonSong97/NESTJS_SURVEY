@@ -55,13 +55,13 @@ export class AnswerService {
    * 답변 생성
    */
   async postAnswer(
-    surveyId: number,
-    totalScore: number,
+    postDto: CreateAnswerDto,
   ) {
     // 1. surveyId로 조회해서 존재 유무 확인
     // 2. 없으면, NotFoundException
     // 3. 있으면, answer 생성하면서 survey 같이 create
     // 4. save를 이용해서 answer 저장
+    const {totalScore, surveyId} = postDto;
     const survey = await this.surveyRepository.findOne({
       where: {
         id: surveyId,
@@ -79,10 +79,11 @@ export class AnswerService {
   /**
    * 특정 답변 수정
    */
-  async putAnswer(
+  async patchAnswer(
     id: number, 
-    totalScore: number,
+    patchDto: UpdateAnswerDto,
   ) {
+    const {totalScore} = patchDto;
     const answer = await this.answerRepository.findOne({
       where: {
         id,

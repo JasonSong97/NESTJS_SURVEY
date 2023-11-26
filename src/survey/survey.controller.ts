@@ -50,7 +50,7 @@ export class SurveyController {
     @Param('id', ParseIntPipe) id: number,
     @Body() body: UpdateSurveyDto,
   ) {
-    return this.surveyService.patchSurvey(id, userId, body);
+    return this.surveyService.patchSurvey(id, body);
   }
 
   /**
@@ -62,6 +62,6 @@ export class SurveyController {
     @Member('id') userId: number,
     @Param('id', ParseIntPipe) id: number
   ) {
-    return this.surveyService.deleteSurvey(id, userId);
+    return this.surveyService.deleteSurvey(id);
   }
 }

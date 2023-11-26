@@ -1,7 +1,9 @@
-import { Controller, Get, Post, Body, Param, Delete, Put, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, UseGuards, Patch } from '@nestjs/common';
 import { AnswerService } from './answer.service';
 import { CreateAnswerDto } from './dto/create-answer.dto';
 import { UpdateAnswerDto } from './dto/update-answer.dto';
+import { AccessTokenGuard } from 'src/auth/guard/bearer-token.guard';
+import { Member } from 'src/user/decorator/user.decorator';
 
 @Controller('api/answer')
 export class AnswerController {
@@ -30,29 +32,34 @@ export class AnswerController {
    * 답변 생성
    */
   @Post()
+  @UseGuards(AccessTokenGuard)
   postAnswer(
-    @Body('surveyId') surveyId: number,
-    @Body('totalScore') totalScore: number,
+    @Member('id') userId: number,
+    @Body() body: CreateAnswerDto,
   ) {
-    return this.answerService.postAnswer(surveyId, totalScore);
+    return this.answerService.postAnswer(body);
   }
 
   /**
    * 특정 답변 수정
    */
-  @Put(':id')
-  putAnswer(
+  @Patch(':id')
+  @UseGuards(AccessTokenGuard)
+  patchAnswer(
+    @Member('id') userId: number,
     @Param('id', ParseIntPipe) id: number, 
-    @Body('totalScore') totalScore: number,
+    @Body() body: UpdateAnswerDto,
   ) {
-    return this.answerService.putAnswer(id, totalScore);
+    return this.answerService.patchAnswer(id, body);
   }
 
   /**
    * 특정 답변 삭제
    */
   @Delete(':id')
+  @UseGuards(AccessTokenGuard)
   deleteAnswer(
+    @Member('id') userId: number,
     @Param('id', ParseIntPipe) id: number
   ) {
     return this.answerService.deleteAnswer(id);

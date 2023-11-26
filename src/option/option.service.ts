@@ -3,6 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Option } from './entities/option.entity';
 import { Repository } from 'typeorm';
 import { Question } from 'src/question/entities/question.entity';
+import { CreateOptionDto } from './dto/create-option.dto';
+import { UpdateOptionDto } from './dto/update-option.dto';
 
 @Injectable()
 export class OptionService {
@@ -53,15 +55,14 @@ export class OptionService {
    * 옵션 생성
    */
   async postOption(
-    questionId: number,
-    score: number,
-    content: string,
+    postDto: CreateOptionDto,
   ) {
     // 1. 중복된 option이 있는지 content로 조회
     // 2. 중복된 option이 있으면, BadRequestException
     // 3. 없으면 questionId로 조회해서 있는지 없는지 확인 questionId가 없는 경우 NotFoundException
     // 4. question이 존재하는 경우 option을 생성할 때 같이 create
     // 5. save를 이용해서 option 저장
+    const {content, score, questionId} = postDto;
     const validationCheck = await this.optionRepository.findOne({
       where: {
         content,
@@ -87,11 +88,11 @@ export class OptionService {
   /**
    * 특정 옵션 수정
    */
-  async putOption(
+  async patchOption(
     id: number, 
-    score: number,
-    content: string,
+    patchDto: UpdateOptionDto,
   ) {
+    const {content, score} = patchDto;
     const option = await this.optionRepository.findOne({
       where: {
         id,

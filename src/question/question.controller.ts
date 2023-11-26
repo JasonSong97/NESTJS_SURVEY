@@ -2,6 +2,8 @@ import { Controller, Get, Post, Body, Param, Delete, Put, ParseIntPipe, Patch, U
 import { QuestionService } from './question.service';
 import { AccessTokenGuard } from 'src/auth/guard/bearer-token.guard';
 import { UpdateQuestionDto } from './dto/update-question.dto';
+import { Member } from 'src/user/decorator/user.decorator';
+import { CreateQuestionDto } from './dto/create-question.dto';
 
 @Controller('api/question')
 export class QuestionController {
@@ -30,12 +32,10 @@ export class QuestionController {
    * 질문 생성
    */
   @Post()
-  @UseGuards(AccessTokenGuard)
   postQuestion(
-    @Body('surveyId', ParseIntPipe) surveyId: number,
-    @Body('content') content: string,
+    @Body() body: CreateQuestionDto,
   ) {
-    return this.questionService.postQuestion(surveyId, content);
+    return this.questionService.postQuestion(body);
   }
 
   /**
@@ -44,6 +44,7 @@ export class QuestionController {
   @Patch(':id')
   @UseGuards(AccessTokenGuard)
   patchQuestion(
+    @Member('id') userId: number,
     @Param('id', ParseIntPipe) id: number,
     @Body() body: UpdateQuestionDto,
   ) {
@@ -56,6 +57,7 @@ export class QuestionController {
   @Delete(':id')
   @UseGuards(AccessTokenGuard)
   deleteQuestion(
+    @Member('id') userId: number,
     @Param('id', ParseIntPipe) id: number
   ) {
     return this.questionService.deleteQuestion(id);
