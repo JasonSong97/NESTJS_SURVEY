@@ -2,6 +2,8 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { InjectRepository } from '@nestjs/typeorm';
 import { Survey } from './entities/survey.entity';
 import { Repository } from 'typeorm';
+import { CreateSurveyDto } from './dto/create-survey.dto';
+import { UpdateSurveyDto } from './dto/update-survey.dto';
 
 @Injectable()
 export class SurveyService {
@@ -52,13 +54,13 @@ export class SurveyService {
    * 설문지 생성
    */
   async postSurvey(
-    title: string,
-    content: string,
+    postDto: CreateSurveyDto,
   ) {
     // 1. 중복된 survey가 있는지 title로 조회
     // 2. 중복된 survey가 있으면, BadRequestException
     // 3. 중복된 survey가 없으면, create를 이용해서 survey 생성
     // 4. save를 이용해서 survey 저장
+    const {title, content} = postDto;
     const validationCheck = await this.surveyRepository.findOne({
       where: {
         title,
@@ -67,8 +69,7 @@ export class SurveyService {
     if (validationCheck) throw new BadRequestException(`${title}은 이미 존재하는 title 입니다.`);
 
     const survey = this.surveyRepository.create({ // await 필요 없음
-      title,
-      content,
+      ...postDto,
     });
     return await this.surveyRepository.save(survey);
   }
@@ -76,15 +77,15 @@ export class SurveyService {
   /**
    * 특정 설문지 수정
    */
-  async putSurvey(
+  async patchSurvey(
     id: number, 
-    title: string,
-    content: string,
+    patchDto: UpdateSurveyDto,
   ) {
     // 1. survey id의 존재 유무 확인
     // 2. 없으면, NotFoundException
     // 3. 있으면, 값 변경
     // 4. 변경된 객체를 return
+    const {title, content} = patchDto;
     const survey = await this.surveyRepository.findOne({
       where: {
         id,

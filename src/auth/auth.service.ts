@@ -4,6 +4,7 @@ import { User } from 'src/user/entities/user.entity';
 import { UserService } from 'src/user/user.service';
 import { HASH_ROUNDS, JWT_SECRET } from './const/auth.const';
 import * as bcrypt from 'bcrypt';
+import { RegisterUserDto } from './dto/register-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -51,7 +52,7 @@ export class AuthService {
           return this.loginUser(existingUser); // DB에서 조회된 user로 토큰 생성
      }
 
-     async registerWithEmail(user: Pick<User, 'email' | 'nickname' | 'mobile' | 'password'>) {
+     async registerWithEmail(user: RegisterUserDto) {
           const hash = await bcrypt.hash(
                user.password,
                HASH_ROUNDS,

@@ -1,5 +1,9 @@
-import { Controller, Get, Post, Body, Param, Delete, Put, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Patch, UseGuards } from '@nestjs/common';
 import { SurveyService } from './survey.service';
+import { CreateSurveyDto } from './dto/create-survey.dto';
+import { UpdateSurveyDto } from './dto/update-survey.dto';
+import { Member } from 'src/user/decorator/user.decorator';
+import { AccessTokenGuard } from 'src/auth/guard/bearer-token.guard';
 
 @Controller('api/survey')
 export class SurveyController {
@@ -28,23 +32,24 @@ export class SurveyController {
    * 설문지 생성
    */
   @Post()
+  @UseGuards(AccessTokenGuard)
   postSurvey(
-    @Body('title') title: string, 
-    @Body('content') content: string,
+    @Member('id') userId: number, 
+    @Body() body: CreateSurveyDto,
   ) {
-    return this.surveyService.postSurvey(title, content);
+    console.log(userId);
+    return this.surveyService.postSurvey(body);
   }
 
   /**
    * 특정 설문지 수정
    */
-  @Put(':id')
-  putSurvey(
+  @Patch(':id')
+  patchSurvey(
     @Param('id', ParseIntPipe) id: number,
-    @Body('title') title: string, 
-    @Body('content') content: string
+    @Body() body: UpdateSurveyDto,
   ) {
-    return this.surveyService.putSurvey(id, title, content);
+    return this.surveyService.patchSurvey(id, body);
   }
 
   /**
