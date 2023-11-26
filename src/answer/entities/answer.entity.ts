@@ -5,7 +5,7 @@ import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 @Entity()
 export class Answer extends BaseModel{
 
-     @ManyToOne(() => Survey, (survey) => survey.id)
+     @ManyToOne(() => Survey, (survey) => survey.id,{onDelete: 'CASCADE',})
      @JoinColumn({ name: 'survey_id' })
      survey: Survey;
 

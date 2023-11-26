@@ -9,11 +9,11 @@ import { lengthValidationMessage } from "src/common/validation-message/length-va
 @Entity()
 export class Question extends BaseModel{
 
-     @ManyToOne(() => Survey, (survey) => survey.id)
+     @ManyToOne(() => Survey, (survey) => survey.id,{onDelete: 'CASCADE',})
      @JoinColumn({ name: 'survey_id'})
      survey: Survey;
 
-     @OneToMany(() => Option, (option) => option.question)
+     @OneToMany(() => Option, (option) => option.question,)
      options: Option[];
 
      @Column({length: 550,})
