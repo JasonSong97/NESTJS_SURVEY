@@ -2,8 +2,8 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { InjectRepository } from '@nestjs/typeorm';
 import { Question } from './entities/question.entity';
 import { Repository } from 'typeorm';
-import { SurveyService } from 'src/survey/survey.service';
 import { Survey } from 'src/survey/entities/survey.entity';
+import { UpdateQuestionDto } from './dto/update-question.dto';
 
 @Injectable()
 export class QuestionService {
@@ -89,14 +89,15 @@ export class QuestionService {
   /**
    * 특정 질문 수정
    */
-  async putQuestion(
+  async patchQuestion(
     id: number, 
-    content: string,
+    patchDto: UpdateQuestionDto,
   ) {
     // 1. question id의 존재 유무 확인
     // 2. 없으면, NotFoundException
     // 3. 있으면, 값 변경
     // 4. 변경된 객체를 return
+    const {content} = patchDto;
     const question = await this.questionRepository.findOne({
       where: {
         id,

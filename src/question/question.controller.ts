@@ -1,5 +1,7 @@
-import { Controller, Get, Post, Body, Param, Delete, Put, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put, ParseIntPipe, Patch, UseGuards } from '@nestjs/common';
 import { QuestionService } from './question.service';
+import { AccessTokenGuard } from 'src/auth/guard/bearer-token.guard';
+import { UpdateQuestionDto } from './dto/update-question.dto';
 
 @Controller('api/question')
 export class QuestionController {
@@ -28,6 +30,7 @@ export class QuestionController {
    * 질문 생성
    */
   @Post()
+  @UseGuards(AccessTokenGuard)
   postQuestion(
     @Body('surveyId', ParseIntPipe) surveyId: number,
     @Body('content') content: string,
@@ -38,18 +41,20 @@ export class QuestionController {
   /**
    * 특정 질문 수정
    */
-  @Put(':id')
-  putQuestion(
+  @Patch(':id')
+  @UseGuards(AccessTokenGuard)
+  patchQuestion(
     @Param('id', ParseIntPipe) id: number,
-    @Body('title') content: string,
+    @Body() body: UpdateQuestionDto,
   ) {
-    return this.questionService.putQuestion(id, content);
+    return this.questionService.patchQuestion(id, body);
   }
 
   /**
    * 특정 질문 삭제
    */
   @Delete(':id')
+  @UseGuards(AccessTokenGuard)
   deleteQuestion(
     @Param('id', ParseIntPipe) id: number
   ) {

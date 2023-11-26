@@ -5,14 +5,14 @@ import { lengthValidationMessage } from "src/common/validation-message/length-va
 import { stringValidationMessage } from "src/common/validation-message/string-validation.message";
 import { Question } from "src/question/entities/question.entity";
 import { User } from "src/user/entities/user.entity";
-import { Column, Entity, ManyToOne, OneToMany } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from "typeorm";
 
 @Entity()
 export class Survey extends BaseModel{
 
-     @Column({length: 250,})
+     @Column({length: 15,})
      @IsString({message: stringValidationMessage,})
-     @Length(1, 250,{message: lengthValidationMessage,})
+     @Length(1, 15,{message: lengthValidationMessage,})
      title: string;
 
      @Column({length: 500,})
@@ -32,5 +32,6 @@ export class Survey extends BaseModel{
      @ManyToOne(() => User, (user) => user.surveys, {
           nullable: false,
      })
+     @JoinColumn({ name: 'writer_id'})
      writer: User;
 }

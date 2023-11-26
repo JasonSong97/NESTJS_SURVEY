@@ -4,6 +4,8 @@ import { QuestionController } from './question.controller';
 import { Question } from './entities/question.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Survey } from 'src/survey/entities/survey.entity';
+import { AuthModule } from 'src/auth/auth.module';
+import { UserModule } from 'src/user/user.module';
 
 @Module({
   imports: [
@@ -11,6 +13,8 @@ import { Survey } from 'src/survey/entities/survey.entity';
       Question,
       Survey,
     ]),
+    AuthModule,
+    UserModule,
   ],
   controllers: [QuestionController],
   providers: [QuestionService],

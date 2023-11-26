@@ -11,7 +11,7 @@ export class SurveyController {
   constructor(private readonly surveyService: SurveyService) {}
 
   /**
-   * 설문지 전체 조회
+   * 설문지 전체 조회 GET
    */
   @Get('all')
   getSurveys() {
@@ -19,7 +19,7 @@ export class SurveyController {
   }
 
   /**
-   * 특정 설문지 조회
+   * 특정 설문지 조회 GET
    */
   @Get(':id')
   getSurvey(
@@ -29,7 +29,7 @@ export class SurveyController {
   }
 
   /**
-   * 설문지 생성
+   * 설문지 생성 POST
    */
   @Post()
   @UseGuards(AccessTokenGuard)
@@ -37,28 +37,31 @@ export class SurveyController {
     @Member('id') userId: number, 
     @Body() body: CreateSurveyDto,
   ) {
-    console.log(userId);
-    return this.surveyService.postSurvey(body);
+    return this.surveyService.postSurvey(userId, body);
   }
 
   /**
-   * 특정 설문지 수정
+   * 특정 설문지 수정 PATCH
    */
   @Patch(':id')
+  @UseGuards(AccessTokenGuard)
   patchSurvey(
+    @Member('id') userId: number,
     @Param('id', ParseIntPipe) id: number,
     @Body() body: UpdateSurveyDto,
   ) {
-    return this.surveyService.patchSurvey(id, body);
+    return this.surveyService.patchSurvey(id, userId, body);
   }
 
   /**
-   * 특정 설문지 삭제
+   * 특정 설문지 삭제 DELETE
    */
   @Delete(':id')
+  @UseGuards(AccessTokenGuard)
   deleteSurvey(
+    @Member('id') userId: number,
     @Param('id', ParseIntPipe) id: number
   ) {
-    return this.surveyService.deleteSurvey(id);
+    return this.surveyService.deleteSurvey(id, userId);
   }
 }

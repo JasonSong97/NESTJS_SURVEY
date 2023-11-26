@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Survey } from './entities/survey.entity';
 import { Repository } from 'typeorm';
@@ -20,7 +20,8 @@ export class SurveyService {
     return await this.surveyRepository.find({
       relations:[
         'questions',
-        'answers'
+        'answers',
+        'writer',
       ],
       order: {
         id: 'asc',
@@ -43,7 +44,8 @@ export class SurveyService {
       },
       relations:[
         'questions',
-        'answers'
+        'answers',
+        'writer',
       ],
     });
     if (!survey) throw new NotFoundException(`id가 ${id}인 survey는 존재하지 않습니다.}`);
@@ -54,11 +56,12 @@ export class SurveyService {
    * 설문지 생성
    */
   async postSurvey(
+    userId: number,
     postDto: CreateSurveyDto,
   ) {
     // 1. 중복된 survey가 있는지 title로 조회
     // 2. 중복된 survey가 있으면, BadRequestException
-    // 3. 중복된 survey가 없으면, create를 이용해서 survey 생성
+    // 3. 중복된 survey가 없으면, create()와 writerId를 이용해서 survey 생성
     // 4. save를 이용해서 survey 저장
     const {title, content} = postDto;
     const validationCheck = await this.surveyRepository.findOne({
@@ -68,7 +71,10 @@ export class SurveyService {
     });
     if (validationCheck) throw new BadRequestException(`${title}은 이미 존재하는 title 입니다.`);
 
-    const survey = this.surveyRepository.create({ // await 필요 없음
+    const survey = this.surveyRepository.create({
+      writer: {
+        id: userId,
+      },
       ...postDto,
     });
     return await this.surveyRepository.save(survey);
@@ -78,19 +84,21 @@ export class SurveyService {
    * 특정 설문지 수정
    */
   async patchSurvey(
-    id: number, 
+    id: number,
+    userId: number,
     patchDto: UpdateSurveyDto,
   ) {
     // 1. survey id의 존재 유무 확인
     // 2. 없으면, NotFoundException
     // 3. 있으면, 값 변경
     // 4. 변경된 객체를 return
-    const {title, content} = patchDto;
+    
     const survey = await this.surveyRepository.findOne({
       where: {
         id,
       },
     });
+    const {title, content} = patchDto;
     if (!survey) throw new NotFoundException(`id가 ${id}인 survey는 존재하지 않습니다.}`);
     if (title) survey.title = title;
     if (content) survey.content = content;
@@ -101,7 +109,8 @@ export class SurveyService {
    * 특정 설문지 삭제
    */
   async deleteSurvey(
-    id: number
+    id: number,
+    userId: number,
   ) {
     // 1. survey id의 존재 유무 확인
     // 2. 없으면, NotFoundException
@@ -111,6 +120,7 @@ export class SurveyService {
         id,
       },
     });
+    if (userId !== survey.writer.id) throw new UnauthorizedException('로그인한 사용자와 일치하지 않습니다.');
     if (!survey) throw new NotFoundException(`id가 ${id}인 survey는 존재하지 않습니다.}`);
     await this.surveyRepository.delete(id);
     return id;
