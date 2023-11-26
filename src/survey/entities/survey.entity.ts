@@ -1,3 +1,4 @@
+import { ApiProperty } from "@nestjs/swagger";
 import { IsString, Length } from "class-validator";
 import { Answer } from "src/answer/entities/answer.entity";
 import { BaseModel } from "src/common/entity/base.entity";
@@ -13,11 +14,13 @@ export class Survey extends BaseModel{
      @Column({length: 15,})
      @IsString({message: stringValidationMessage,})
      @Length(1, 15,{message: lengthValidationMessage,})
+     @ApiProperty({ description: '제목' })
      title: string;
 
      @Column({length: 500,})
      @IsString({message: stringValidationMessage,})
      @Length(0, 500,{message: lengthValidationMessage,})
+     @ApiProperty({ description: '내용' })
      content: string;
 
      @OneToMany(() => Question, (question) => question.survey)
@@ -33,5 +36,6 @@ export class Survey extends BaseModel{
           nullable: false,
      })
      @JoinColumn({ name: 'writer_id'})
+     @ApiProperty({ description: '작성자' })
      writer: User;
 }
