@@ -151,8 +151,9 @@ yarn start:dev
     - 옵션 API 개발
     - 답변 API 개발
     - JWT를 이용한 사용자 Basic 토큰 로그인, 회원가입 개발
-    - AccessToken과 RefreshToken을 이용한 재발급 및 Guard 개발
+    - AccessToken과 RefreshToken과 인증을 이용한 재발급 및 Guard 개발
     - Custom Validation 적용
+    - OOP를 이용한 DTO와 Entity 설계
     - Custom Message 일반화 적용
     - Swagger 문서화
 - Github: [@Jason_song97](https://github.com/JasonSong97)
@@ -161,7 +162,7 @@ yarn start:dev
 
 - Nest.js를 학습한지는 2개월이 안되었지만, SpringBoot에서 CRUD개발을 잘 못했던 스스로가 Nest.js를 사용해서는 눈에 띄게 API개발을 하며 모르거나 에러가 발생한 부분에서는 공식문서와 StackOverflow를 찾아보고 문제를 해결하는 저를 발견했습니다. 특히 JWT의 경우 SpringBoot로 accessToken과 refreshToken을 구현할 때 왔다갔다하는 과정이 정말 힘들었지만, Nest.js에 JWT를 적용하고 Guard와 Custom Validation 그리고 Custom Pipe를 적용하는 모습을 보고 많이 스스로 뿌듯했습니다. 
 
-- 따라서 지금 과제를 하면서 느낀점은 코딩테스트를 떠나서 목표를 향해 앞으로 조금씩 정진하면 언젠가는 성장한다는 뿌듯함을 얻었습니다. 또한 SpringBoot와 Nest.js의 차이점을 async와 await, 그리고 동기와 비동기를 통해서 알게된 뜻 깊은 과제였습니다. 감사합니다.
+- 따라서 지금 과제를 하면서 느낀점은 코딩테스트를 떠나서 목표를 향해 앞으로 조금씩 정진하면 언젠가는 성장한다는 뿌듯함을 얻었습니다. 또한 OOP의 상속을 DTO와 Entity에 이용해 최대한 유지보수와 확장성이 쉽도록 설계했고, SpringBoot와 Nest.js의 차이점을 async와 await, 그리고 동기와 비동기를 통해서 알게된 뜻 깊은 과제였습니다. 감사합니다. 
 
 ## Show your support
 
