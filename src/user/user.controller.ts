@@ -8,7 +8,7 @@ export class UserController {
 
   constructor(private readonly userService: UserService) {}
 
-  @Get()
+  @Get('all')
   @ApiOperation({ summary: '사용자 전체 조회 API', description: '전체 사용자를 조회한다.' })
   @ApiOkResponse({description: 'Success',})
   async getUsers() {

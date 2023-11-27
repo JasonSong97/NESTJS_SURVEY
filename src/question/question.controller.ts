@@ -25,14 +25,14 @@ export class QuestionController {
   /**
    * 특정 질문 조회
    */
-  @Get(':id')
+  @Get(':questionId')
   @ApiOperation({ summary: '특정 질문 조회 API', description: '특정 질문을 조회한다.' })
   @ApiOkResponse({description: 'Success',})
-  @ApiParam({ name: 'id', description: '질문의 id' })
+  @ApiParam({ name: 'questionId', description: '질문의 id' })
   getQuestion(
-    @Param('id', ParseIntPipe) id: number
+    @Param('questionId', ParseIntPipe) questionId: number
   ) {
-    return this.questionService.getQuestion(id);
+    return this.questionService.getQuestion(questionId);
   }
 
   /**
@@ -50,31 +50,31 @@ export class QuestionController {
   /**
    * 특정 질문 수정
    */
-  @Patch(':id')
+  @Patch(':questionId')
   @ApiOperation({ summary: '특정 질문 수정 API', description: '특정 질문을 수정한다.' })
   @ApiBearerAuth()
-  @ApiParam({ name: 'id', description: '질문의 id' })
+  @ApiParam({ name: 'questionId', description: '질문의 id' })
   @UseGuards(AccessTokenGuard)
   patchQuestion(
     @Member('id') userId: number,
-    @Param('id', ParseIntPipe) id: number,
+    @Param('questionId', ParseIntPipe) questionId: number,
     @Body() body: UpdateQuestionDto,
   ) {
-    return this.questionService.patchQuestion(id, body);
+    return this.questionService.patchQuestion(questionId, body);
   }
 
   /**
    * 특정 질문 삭제
    */
-  @Delete(':id')
+  @Delete(':questionId')
   @ApiOperation({ summary: '특정 질문 삭제 API', description: '특정 질문을 삭제한다.' })
   @ApiBearerAuth()
-  @ApiParam({ name: 'id', description: '질문의 id' })
+  @ApiParam({ name: 'questionId', description: '질문의 id' })
   @UseGuards(AccessTokenGuard)
   deleteQuestion(
     @Member('id') userId: number,
-    @Param('id', ParseIntPipe) id: number
+    @Param('questionId', ParseIntPipe) questionId: number
   ) {
-    return this.questionService.deleteQuestion(id);
+    return this.questionService.deleteQuestion(questionId);
   }
 }

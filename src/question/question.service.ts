@@ -35,21 +35,21 @@ export class QuestionService {
    * 특정 질문 조회
    */
   async getQuestion(
-    id: number
+    questionId: number
   ) {
     // 1. question id의 존재 유무 확인
     // 2. 없으면, NotFoundException
     // 3. 있으면, 그대로 return
     const question = await this.questionRepository.findOne({
       where: {
-        id,
+        id: questionId,
       },
       relations:[
         'survey',
         'options'
       ],
     });
-    if (!question) throw new NotFoundException(`id가 ${id}인 question는 존재하지 않습니다.}`);
+    if (!question) throw new NotFoundException(`id가 ${questionId}인 question는 존재하지 않습니다.}`);
     return question;
   }
 
@@ -91,7 +91,7 @@ export class QuestionService {
    * 특정 질문 수정
    */
   async patchQuestion(
-    id: number, 
+    questionId: number, 
     patchDto: UpdateQuestionDto,
   ) {
     // 1. question id의 존재 유무 확인
@@ -101,10 +101,10 @@ export class QuestionService {
     const {content} = patchDto;
     const question = await this.questionRepository.findOne({
       where: {
-        id,
+        id: questionId,
       },
     });
-    if (!question) throw new NotFoundException(`id가 ${id}인 question는 존재하지 않습니다.}`);
+    if (!question) throw new NotFoundException(`id가 ${questionId}인 question는 존재하지 않습니다.}`);
     if (content) question.content = content;
     return await this.questionRepository.save(question);
   }
@@ -113,18 +113,18 @@ export class QuestionService {
    * 특정 질문 삭제
    */
   async deleteQuestion(
-    id: number
+    questionId: number
   ) {
     // 1. question id의 존재 유무 확인
     // 2. 없으면, NotFoundException
     // 3. 있으면, 그대로 삭제 후 question id만 리턴
     const question = await this.questionRepository.findOne({
       where: {
-        id,
+        id: questionId,
       },
     });
-    if (!question) throw new NotFoundException(`id가 ${id}인 question는 존재하지 않습니다.}`);
-    await this.questionRepository.delete(id);
-    return id;
+    if (!question) throw new NotFoundException(`id가 ${questionId}인 question는 존재하지 않습니다.}`);
+    await this.questionRepository.delete(questionId);
+    return questionId;
   }
 }

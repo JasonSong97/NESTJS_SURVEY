@@ -25,14 +25,14 @@ export class AnswerController {
   /**
    * 특정 답변 조회
    */
-  @Get(':id')
+  @Get(':answerId')
   @ApiOperation({ summary: '특정 답변 조회 API', description: '특졍 답변을 조회한다.' })
   @ApiOkResponse({description: 'Success',})
-  @ApiParam({ name: 'id', description: '답변의 id' })
+  @ApiParam({ name: 'answerId', description: '답변의 id' })
   getAnswer(
-    @Param('id', ParseIntPipe) id: number
+    @Param('answerId', ParseIntPipe) answerId: number
   ) {
-    return this.answerService.getAnswer(id);
+    return this.answerService.getAnswer(answerId);
   }
 
   /**
@@ -52,31 +52,31 @@ export class AnswerController {
   /**
    * 특정 답변 수정
    */
-  @Patch(':id')
+  @Patch(':answerId')
   @ApiOperation({ summary: '특정 답변 수정 API', description: '특정 답변을 수정한다.' })
   @ApiBearerAuth()
-  @ApiParam({ name: 'id', description: '답변의 id' })
+  @ApiParam({ name: 'answerId', description: '답변의 id' })
   @UseGuards(AccessTokenGuard)
   patchAnswer(
     @Member('id') userId: number,
-    @Param('id', ParseIntPipe) id: number, 
+    @Param('answerId', ParseIntPipe) answerId: number, 
     @Body() body: UpdateAnswerDto,
   ) {
-    return this.answerService.patchAnswer(id, body);
+    return this.answerService.patchAnswer(answerId, body);
   }
 
   /**
    * 특정 답변 삭제
    */
-  @Delete(':id')
+  @Delete(':answerId')
   @ApiOperation({ summary: '특정 답변 삭제 API', description: '특정 답변을 삭제한다.' })
   @ApiBearerAuth()
-  @ApiParam({ name: 'id', description: '답변의 id' })
+  @ApiParam({ name: 'answerId', description: '답변의 id' })
   @UseGuards(AccessTokenGuard)
   deleteAnswer(
     @Member('id') userId: number,
-    @Param('id', ParseIntPipe) id: number
+    @Param('answerId', ParseIntPipe) answerId: number
   ) {
-    return this.answerService.deleteAnswer(id);
+    return this.answerService.deleteAnswer(answerId);
   }
 }

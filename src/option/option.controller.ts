@@ -25,14 +25,14 @@ export class OptionController {
   /**
    * 특정 옵션 조회
    */
-  @Get(':id')
+  @Get(':optionId')
   @ApiOperation({ summary: '특정 옵션 조회 API', description: '특정 옵션을 조회한다.' })
   @ApiOkResponse({description: 'Success',})
-  @ApiParam({ name: 'id', description: '옵션의 id' })
+  @ApiParam({ name: 'optionId', description: '옵션의 id' })
   getOption(
-    @Param('id', ParseIntPipe) id: number
+    @Param('optionId', ParseIntPipe) optionId: number
   ) {
-    return this.optionService.getOption(id);
+    return this.optionService.getOption(optionId);
   }
 
   /**
@@ -51,31 +51,31 @@ export class OptionController {
   /**
    * 특정 옵션 수정
    */
-  @Patch(':id')
+  @Patch(':optionId')
   @ApiOperation({ summary: '특정 옵션 수정 API', description: '특정 옵션을 수정한다.' })
   @ApiBearerAuth()
-  @ApiParam({ name: 'id', description: '옵션의 id' })
+  @ApiParam({ name: 'optionId', description: '옵션의 id' })
   @UseGuards(AccessTokenGuard)
   patchOption(
     @Member('id') userId: number,
-    @Param('id', ParseIntPipe) id: number, 
+    @Param('optionId', ParseIntPipe) optionId: number, 
     @Body() body: UpdateOptionDto,
   ) {
-    return this.optionService.patchOption(id, body);
+    return this.optionService.patchOption(optionId, body);
   }
 
   /**
    * 특정 옵션 삭제
    */
-  @Delete(':id')
+  @Delete(':optionId')
   @ApiOperation({ summary: '특정 옵션 삭제 API', description: '특정 옵션을 삭제한다.' })
   @ApiBearerAuth()
-  @ApiParam({ name: 'id', description: '옵션의 id' })
+  @ApiParam({ name: 'optionId', description: '옵션의 id' })
   @UseGuards(AccessTokenGuard)
   deleteOption(
     @Member('id') userId: number,
-    @Param('id', ParseIntPipe) id: number
+    @Param('optionId', ParseIntPipe) optionId: number
   ) {
-    return this.optionService.deleteOption(id);
+    return this.optionService.deleteOption(optionId);
   }
 }

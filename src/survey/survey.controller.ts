@@ -25,14 +25,14 @@ export class SurveyController {
   /**
    * 특정 설문지 조회 GET
    */
-  @Get(':id')
+  @Get(':surveyId')
   @ApiOperation({ summary: '특정 설문지 조회 API', description: '특정 설문지를 조회한다.' })
   @ApiOkResponse({description: 'Success',})
-  @ApiParam({ name: 'id', description: '설문지의 id' })
+  @ApiParam({ name: 'surveyId', description: '설문지의 id' })
   getSurvey(
-    @Param('id', ParseIntPipe) id: number
+    @Param('surveyId', ParseIntPipe) surveyId: number
   ) {
-    return this.surveyService.getSurvey(id);
+    return this.surveyService.getSurvey(surveyId);
   }
 
   /**
@@ -53,31 +53,31 @@ export class SurveyController {
   /**
    * 특정 설문지 수정 PATCH
    */
-  @Patch(':id')
+  @Patch(':surveyId')
   @ApiOperation({ summary: '특정 설문지 수정 API', description: '특정 설문지를 수정한다.' })
   @ApiBearerAuth()
-  @ApiParam({ name: 'id', description: '설문지의 id' })
+  @ApiParam({ name: 'surveyId', description: '설문지의 id' })
   @UseGuards(AccessTokenGuard)
   patchSurvey(
     @Member('id') userId: number,
-    @Param('id', ParseIntPipe) id: number,
+    @Param('surveyId', ParseIntPipe) surveyId: number,
     @Body() body: UpdateSurveyDto,
   ) {
-    return this.surveyService.patchSurvey(id, body);
+    return this.surveyService.patchSurvey(surveyId, body);
   }
 
   /**
    * 특정 설문지 삭제 DELETE
    */
-  @Delete(':id')
+  @Delete(':surveyId')
   @ApiOperation({ summary: '특정 설문지 삭제 API', description: '특정 설문지를 삭제한다.' })
   @ApiBearerAuth()
-  @ApiParam({ name: 'id', description: '설문지의 id' })
+  @ApiParam({ name: 'surveyId', description: '설문지의 id' })
   @UseGuards(AccessTokenGuard)
   deleteSurvey(
     @Member('id') userId: number,
-    @Param('id', ParseIntPipe) id: number
+    @Param('surveyId', ParseIntPipe) surveyId: number
   ) {
-    return this.surveyService.deleteSurvey(id);
+    return this.surveyService.deleteSurvey(surveyId);
   }
 }

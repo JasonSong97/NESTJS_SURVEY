@@ -33,14 +33,14 @@ export class SurveyService {
    * 특정 설문지 조회
    */
   async getSurvey(
-    id: number
+    surveyId: number
   ) {
     // 1. survey id의 존재 유무 확인
     // 2. 없으면, NotFoundException
     // 3. 있으면, 그대로 return
     const survey = await this.surveyRepository.findOne({
       where: {
-        id,
+        id: surveyId,
       },
       relations:[
         'questions',
@@ -48,7 +48,7 @@ export class SurveyService {
         'writer',
       ],
     });
-    if (!survey) throw new NotFoundException(`id가 ${id}인 survey는 존재하지 않습니다.}`);
+    if (!survey) throw new NotFoundException(`id가 ${surveyId}인 survey는 존재하지 않습니다.}`);
     return survey;
   }
 
@@ -84,7 +84,7 @@ export class SurveyService {
    * 특정 설문지 수정
    */
   async patchSurvey(
-    id: number,
+    surveyId: number,
     patchDto: UpdateSurveyDto,
   ) {
     // 1. survey id의 존재 유무 확인
@@ -93,11 +93,11 @@ export class SurveyService {
     // 4. 변경된 객체를 return
     const survey = await this.surveyRepository.findOne({
       where: {
-        id,
+        id: surveyId,
       },
     });
     const {title, content} = patchDto;
-    if (!survey) throw new NotFoundException(`id가 ${id}인 survey는 존재하지 않습니다.}`);
+    if (!survey) throw new NotFoundException(`id가 ${surveyId}인 survey는 존재하지 않습니다.}`);
     if (title) survey.title = title;
     if (content) survey.content = content;
     return await this.surveyRepository.save(survey);
@@ -107,18 +107,18 @@ export class SurveyService {
    * 특정 설문지 삭제
    */
   async deleteSurvey(
-    id: number,
+    surveyId: number,
   ) {
     // 1. survey id의 존재 유무 확인
     // 2. 없으면, NotFoundException
     // 3. 있으면, 그대로 삭제 후 survey id만 리턴
     const survey = await this.surveyRepository.findOne({
       where: {
-        id,
+        id: surveyId
       },
     });
-    if (!survey) throw new NotFoundException(`id가 ${id}인 survey는 존재하지 않습니다.}`);
-    await this.surveyRepository.delete(id);
-    return id;
+    if (!survey) throw new NotFoundException(`id가 ${surveyId}인 survey는 존재하지 않습니다.}`);
+    await this.surveyRepository.delete(surveyId);
+    return surveyId;
   }
 }

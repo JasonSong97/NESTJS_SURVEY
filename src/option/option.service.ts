@@ -34,20 +34,20 @@ export class OptionService {
    * 특정 옵션 조회
    */
   async getOption(
-    id: number
+    optionId: number
   ) {
     // 1. option id의 존재 유무 확인
     // 2. 없으면, NotFoundException
     // 3. 있으면, 그대로 return
     const option = await this.optionRepository.findOne({
       where: {
-        id,
+        id: optionId,
       },
       relations:[
         'question',
       ],
     });
-    if (!option) throw new NotFoundException(`id가 ${id}인 option은 존재하지 않습니다.}`);
+    if (!option) throw new NotFoundException(`id가 ${optionId}인 option은 존재하지 않습니다.}`);
     return option;
   }
 
@@ -89,16 +89,16 @@ export class OptionService {
    * 특정 옵션 수정
    */
   async patchOption(
-    id: number, 
+    optionId: number, 
     patchDto: UpdateOptionDto,
   ) {
     const {content, score} = patchDto;
     const option = await this.optionRepository.findOne({
       where: {
-        id,
+        id: optionId,
       },
     });
-    if (!option) throw new NotFoundException(`id가 ${id}인 option은 존재하지 않습니다.}`);
+    if (!option) throw new NotFoundException(`id가 ${optionId}인 option은 존재하지 않습니다.}`);
     if (score) option.score = score;
     if (content) option.content = content;
     return await this.optionRepository.save(option);
@@ -108,18 +108,18 @@ export class OptionService {
    * 특정 옵션 삭제
    */
   async deleteOption(
-    id: number
+    optionId: number
   ) {
     // 1. option id의 존재 유무 확인
     // 2. 없으면, NotFoundException
     // 3. 있으면, 그대로 삭제 후 option id만 리턴
     const option = await this.optionRepository.findOne({
       where: {
-        id,
+        id: optionId,
       },
     });
-    if (!option) throw new NotFoundException(`id가 ${id}인 option은 존재하지 않습니다.}`);
-    await this.optionRepository.delete(id);
-    return id;
+    if (!option) throw new NotFoundException(`id가 ${optionId}인 option은 존재하지 않습니다.}`);
+    await this.optionRepository.delete(optionId);
+    return optionId;
   }
 }
