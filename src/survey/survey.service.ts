@@ -18,6 +18,11 @@ export class SurveyService {
    */
   async getSurveys() {
     return await this.surveyRepository.find({
+      select: {
+        id: true,
+        title: true,
+        content: true,
+      },
       relations:[
         'questions',
         'answers',
@@ -39,6 +44,11 @@ export class SurveyService {
     // 2. 없으면, NotFoundException
     // 3. 있으면, 그대로 return
     const survey = await this.surveyRepository.findOne({
+      select: {
+        id: true,
+        title: true,
+        content: true,
+      },
       where: {
         id: surveyId,
       },

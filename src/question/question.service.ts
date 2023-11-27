@@ -21,6 +21,10 @@ export class QuestionService {
    */
   async getQuestions() {
     return await this.questionRepository.find({
+      select: {
+        id: true,
+        content: true,
+      },
       relations:[
         'survey',
         'options'
@@ -41,6 +45,10 @@ export class QuestionService {
     // 2. 없으면, NotFoundException
     // 3. 있으면, 그대로 return
     const question = await this.questionRepository.findOne({
+      select: {
+        id: true,
+        content: true,
+      },
       where: {
         id: questionId,
       },

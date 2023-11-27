@@ -21,6 +21,11 @@ export class OptionService {
    */
   async getOptions() {
     return await this.optionRepository.find({
+      select: {
+        id: true,
+        content: true,
+        score: true,
+      },
       relations:[
         'question',
       ],
@@ -40,6 +45,11 @@ export class OptionService {
     // 2. 없으면, NotFoundException
     // 3. 있으면, 그대로 return
     const option = await this.optionRepository.findOne({
+      select: {
+        id: true,
+        content: true,
+        score: true,
+      },
       where: {
         id: optionId,
       },

@@ -21,6 +21,10 @@ export class AnswerService {
    */
   async getAnswers() {
     return await this.answerRepository.find({
+      select: {
+        id: true,
+        totalScore: true,
+      },
       relations:[
         'survey',
       ],
@@ -40,11 +44,15 @@ export class AnswerService {
     // 2. 없으면, NotFoundException
     // 3. 있으면, 그대로 return
     const answer = await this.answerRepository.findOne({
+      select: {
+        id: true,
+        totalScore: true,
+      },
       where: {
         id: answerId,
       },
       relations: [
-        'survey',
+        'survey',        
       ],
     });
     if (!answer) throw new NotFoundException(`id가 ${answerId}인 answer는 존재하지 않습니다.`);
