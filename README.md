@@ -22,14 +22,14 @@
 
 - Typescript
 - Nest.js
-- Graphql
-- TypeROM
+- TypeROM or Graphql
 - PostgreSQL
-- 그 외 다른 라이브러리 사용 가능
+- etc.. library
 
 #### 내용
+- 사용자가 설문지를 작성한다.
 - 객관식의 데이터 베이스 설계
-  - 답변별 점수가 존자한다.
+  - 답변별 점수가 존재
     - ex) 1. 패키지 여행 - 0점 / 2. 자유여행 - 1점 / 3. 테마 여행 - 2점
   - 설문지는 답변을 체크할 수 있다.
   - 답변의 총점을 확인할 수 있다.
@@ -37,25 +37,12 @@
 #### API 기능 구현
 
 - 각 도메인 CRUD, 설문지 완료, 완료된 설문지 확인
+- 사용자 CRUD (role)
 - 에러처리
-  - 요청 실패 시 적절한 에러를 리턴해야 합니다.
-  - 에러 응답에 제한은 없지만 일관되게 응답해야 합니다.
+  - 요청 실패 시 적절한 에러를 리턴
+  - 에러 응답에 제한은 없지만 일관되게 응답
 - 로그
   - 에러 및 특이사항 발생시 로그를 확인하여 대처할 수 있게 작성
-
-#### 제출방법
-
-- 과제는 github에 올린뒤 링크를 메일로 제출해주세요.
-- readMe를 작성해주세요
-- 서버는 4000번 포트에서 실행돼야 합니다.
-- 서버 실행 방법을 반드시 기재해야 합니다.
-- 서버 **실행 실패시 탈락** 처리 되므로 제출에 유의해주세요.
-
-#### 문의사항
-
-- 과제 기한은 7일입니다.
-    - 과제 기한은 받은 다음날 부터 시작이 됩니다.
-    - ex) 11/12일에 받았다면 11/13일부터 시작해서 11/19일까지 작업하셔서 9일이 끝나기 전에 보내주시면 됩니다.
 
 ## 실행방법
 
@@ -122,6 +109,8 @@ yarn start:dev
 
 ![erd](readmefile/erd.png)
 
+- 추가 예정...
+
 ## 개발일지
 
 👤 **Jason_song97**
@@ -138,7 +127,8 @@ yarn start:dev
 - 삭제시 Cascade 적용 (23/11/26) - `commit`: [7efc35e](https://github.com/JasonSong97/survey/commit/7efc35e6729ee764c6e609b2b9b8fe54e2514ada)
 - Swagger 문서화 (23/11/27) - `commit`: [4632047](https://github.com/JasonSong97/survey/commit/46320473781124ac2c29a8ed0abdfa614b5c030a)
 - 컨트롤러 Param 리펙토링 (23/11/27) - `commit`: [134932b](https://github.com/JasonSong97/survey/commit/134932b78b47c6141b2119636920793ea2da6d02)
-  
+- 진행중....
+
 ## Author & Role
 
 👤 **송재근**
@@ -146,23 +136,22 @@ yarn start:dev
 - Role
   - 작업한 내용
     - ERD 설계
-    - 설문지 API 개발
-    - 질문 API 개발
-    - 옵션 API 개발
-    - 답변 API 개발
+    - 설문지, 질문, 옵션, 답변 CRUD API 개발
+    - 사용자 API 개발
     - JWT를 이용한 사용자 Basic 토큰 로그인, 회원가입 개발
     - AccessToken과 RefreshToken과 인증을 이용한 재발급 및 Guard 개발
     - Custom Validation 적용
     - OOP를 이용한 DTO와 Entity 설계
     - Custom Message 일반화 적용
     - Swagger 문서화
+    - 진행중....
 - Github: [@Jason_song97](https://github.com/JasonSong97)
 
 ## 소감문
 
-- Nest.js를 학습한지는 2개월이 안되었지만, SpringBoot에서 CRUD개발을 잘 못했던 스스로가 Nest.js를 사용해서는 눈에 띄게 API개발을 하며 모르거나 에러가 발생한 부분에서는 공식문서와 StackOverflow를 찾아보고 문제를 해결하는 저를 발견했습니다. 특히 JWT의 경우 SpringBoot로 accessToken과 refreshToken을 구현할 때 왔다갔다하는 과정이 정말 힘들었지만, Nest.js에 JWT를 적용하고 Guard와 Custom Validation 그리고 Custom Pipe를 적용하는 모습을 보고 많이 스스로 뿌듯했습니다. 
+- SpringBoot에서 CRUD개발을 잘 익숙하지 못했지만 Nest.js를 사용해서는 눈에 띄게 API개발을 하며 모르거나 에러가 발생한 부분에서는 공식문서와 StackOverflow를 찾아보고 문제를 해결하는 송재근을 발견했습니다. 특히 JWT의 경우 SpringBoot로 accessToken과 refreshToken을 구현할 때 왔다갔다하는 과정이 정말 힘들었지만, Nest.js에 JWT를 적용하고 Guard와 Custom Validation Message 그리고 Custom Pipe를 적용하는 모습을 보고 많이 스스로 뿌듯했습니다. 아직 부족한 부분이 많이 남아 있지만 계속해서 새롭게 배운 내용들을 적용하면서 고도화를 하겠습니다.
 
-- 따라서 지금 과제를 하면서 느낀점은 코딩테스트를 떠나서 목표를 향해 앞으로 조금씩 정진하면 언젠가는 성장한다는 뿌듯함을 얻었습니다. 또한 OOP의 상속을 DTO와 Entity에 이용해 최대한 유지보수와 확장성이 쉽도록 설계했고, SpringBoot와 Nest.js의 차이점을 async와 await, 그리고 동기와 비동기를 통해서 알게된 뜻 깊은 과제였습니다. 감사합니다. 
+- 따라서 지금 과제를 하면서 느낀점은 목표를 향해 앞으로 조금씩 정진하면 언젠가는 성장한다는 뿌듯함을 얻었습니다. 또한 OOP의 상속을 DTO와 Entity에 이용해 최대한 유지보수와 확장성이 쉽도록 설계했고, SpringBoot와 Nest.js의 차이점을 async와 await, 그리고 동기와 비동기를 통해서 알게된 뜻 깊은 프로젝트입니다.
 
 ## Show your support
 
