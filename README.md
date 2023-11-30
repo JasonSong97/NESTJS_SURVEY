@@ -16,34 +16,6 @@
 </p>
 <h2 align=center>Nest.js를 이용한 설문지 프로그램📋, Survey </h2>
 
-## 요구사항
-
-#### 사용기술
-
-- Typescript
-- Nest.js
-- TypeROM or Graphql
-- PostgreSQL
-- etc.. library
-
-#### 내용
-- 사용자가 설문지를 작성한다.
-- 객관식의 데이터 베이스 설계
-  - 답변별 점수가 존재
-    - ex) 1. 패키지 여행 - 0점 / 2. 자유여행 - 1점 / 3. 테마 여행 - 2점
-  - 설문지는 답변을 체크할 수 있다.
-  - 답변의 총점을 확인할 수 있다.
-
-#### API 기능 구현
-
-- 각 도메인 CRUD, 설문지 완료, 완료된 설문지 확인
-- 사용자 CRUD (role)
-- 에러처리
-  - 요청 실패 시 적절한 에러를 리턴
-  - 에러 응답에 제한은 없지만 일관되게 응답
-- 로그
-  - 에러 및 특이사항 발생시 로그를 확인하여 대처할 수 있게 작성
-
 ## 실행방법
 
 1. survey와 같은 경로에서 터미널을 열어 docker를 실행합니다.
@@ -150,8 +122,6 @@ yarn start:dev
 ## 소감문
 
 - SpringBoot에서 CRUD개발을 잘 익숙하지 못했지만 Nest.js를 사용해서는 눈에 띄게 API개발을 하며 모르거나 에러가 발생한 부분에서는 공식문서와 StackOverflow를 찾아보고 문제를 해결하는 송재근을 발견했습니다. 특히 JWT의 경우 SpringBoot로 accessToken과 refreshToken을 구현할 때 왔다갔다하는 과정이 정말 힘들었지만, Nest.js에 JWT를 적용하고 Guard와 Custom Validation Message 그리고 Custom Pipe를 적용하는 모습을 보고 많이 스스로 뿌듯했습니다. 아직 부족한 부분이 많이 남아 있지만 계속해서 새롭게 배운 내용들을 적용하면서 고도화를 하겠습니다.
-
-- 따라서 지금 과제를 하면서 느낀점은 목표를 향해 앞으로 조금씩 정진하면 언젠가는 성장한다는 뿌듯함을 얻었습니다. 또한 OOP의 상속을 DTO와 Entity에 이용해 최대한 유지보수와 확장성이 쉽도록 설계했고, SpringBoot와 Nest.js의 차이점을 async와 await, 그리고 동기와 비동기를 통해서 알게된 뜻 깊은 프로젝트입니다.
 
 ## Show your support
 
